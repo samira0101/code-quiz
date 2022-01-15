@@ -1,0 +1,25 @@
+* {
+    background-color: rgb(236, 228, 228);
+    font-family: cursive;
+    flex: auto;
+}
+
+.container {
+    display: flex;
+    
+    justify-content: center;
+}
+
+h1 {
+    color: coral;
+
+}
+
+#start-button {
+    margin-left: 75px;
+}
+
+button {
+    color: brown;
+}
+
