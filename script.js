@@ -212,18 +212,20 @@ function back(event) {
   highscoreButton.disabled = false;
 }
 
-    for(let i = 0 ; i < choice.length ; i++){
-        choice[i].addEventListener('click', () => {
-            userAnswer = choice[i].innerText;
-            console.log(`Your answer: ${userAnswer}`)
-            console.log(`The correct answer is: ${quizData[question - 1].answer}`)
-            console.log(`The answer is: ${userAnswer == quizData[question - 1].answer}`)
-        })
-    }
+// function to clear the scores
+function clearScores() {
+  highscoreArray = [];
+  localStorage.setItem("highscores", JSON.stringify(highscoreArray));
+  highscoresEL.innerHTML = "";
+}
 
-    question++;
-    clearInterval(interval);
+function testFunciton(event) {
+  console.log("test");
+}
 
-
-});
-
+highscoreButton.addEventListener("click", viewHighscores);
+startButton.addEventListener("click", startQuiz);
+backButton.addEventListener("click", back);
+answersEl.addEventListener("click", checkAnswer);
+submitButton.addEventListener("click", submitScore);
+clearButton.addEventListener("click", clearScores);
