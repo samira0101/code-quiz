@@ -132,18 +132,85 @@ function shuffle(array) {
   array.sort(() => Math.random() - 0.5);
 }
 
-
-startButton.addEventListener('click' , () => { 
-    let interval = setInterval(updateCountdown, 1000);
-    let list = ""
-
-    currentQuestion.innerHTML = quizData[question].question;
-
-    for(let i = 0; i < quizData[question].multiplechoice.length; i++){
-        list += `<li class="choice">${quizData[question].multiplechoice[i]} </li>`
+//function to check if the answer macthes
+function checkAnswer(event) {
+  if (event.target.matches("button")) {
+    if (event.target.textContent === questionArray[questionIndex].rightAnswer) {
+      correctnessEl.textContent = "CORRECT";
+      setTimeout(function() {
+        correctnessEl.textContent = "";
+      }, 1200);
+    } else {
+      if(score >= 15){
+      score -= 15;
+      }else{
+        score = 0;
+        setTimeout(function() {
+          questionPage.classList.add("d-none");
+          scorePage.classList.remove("d-none");
+        }, 1002);
+      }
+      timerEL.textContent = score;
+      correctnessEl.textContent = "WRONG";
+      setTimeout(function() {
+        correctnessEl.textContent = "";
+      }, 1000);
     }
+    if (questionIndex < questionArray.length - 1) {
+      questionIndex++;
+      renderQuestion();
+    } else {
+      gameOver = true;
+      setTimeout(function() {
+        questionPage.classList.add("d-none");
+        scorePage.classList.remove("d-none");
+      }, 1002);
+      scoreEl.textContent = score;
+    }
+  }
+}
 
-    multiplechoice.innerHTML = list;
+function submitScore(event) {
+  event.preventDefault();
+  var newScore = {
+    initials: "",
+    yourScore: ""
+  };
+  newScore.initials = initialsEl.value.toUpperCase();
+  newScore.yourScore = score;
+  highscoreArray.push(newScore);
+  localStorage.setItem("highscores", JSON.stringify(highscoreArray));
+  viewHighscores();
+  renderHighscores();
+}
+
+function renderHighscores() {
+  highscoresEL.innerHTML = "";
+  highscoreArray.sort(compare);
+  for (var i = 0; i < highscoreArray.length; i++) {
+    var insertedScore = document.createElement("li");
+    insertedScore.classList.add("list-group-item", "list-group-item-primary");
+    insertedScore.textContent =
+      i +
+      1 +
+      ". " +
+      highscoreArray[i].initials +
+      ": " +
+      highscoreArray[i].yourScore;
+    highscoresEL.appendChild(insertedScore);
+  }
+  highscoreButton.disabled = true;
+}
+
+function compare(a, b) {
+  return b.yourScore - a.yourScore;
+}
+
+function back(event) {
+  highscorePage.classList.add("d-none");
+  homePage.classList.remove("d-none");
+  highscoreButton.disabled = false;
+}
 
     for(let i = 0 ; i < choice.length ; i++){
         choice[i].addEventListener('click', () => {
