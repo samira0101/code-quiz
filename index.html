@@ -1,31 +1,73 @@
 <!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Guess the word game</title>
-    <link rel="stylesheet" href="style.css">
-</head>
-<body class="container">
-    <div class="guess-box">
-        <h1 id="question">Guess The Word </h1>
-        <ul id="multipleChoices"></ul>
-        <button id="start-button">Start</button>
-        <h2 id="guess-word"></h2>
-    </div>
-    <div id="timer">
-    5:00
-    </div>
-    <div class="timer-box">
-        <h2>Timer:</h2>
-        <h3 id="timer-number"></h3>
-        <h3>Wins:<span id="win-count"> </span></h3>
-        <h3>Losses:<span id="loss-count"> </span></h3>
-        <button id="reset-button">Reset Score</button>
+<html class="no-js">
+  <head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <title></title>
+    <meta name="description" content="" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <link
+      rel="stylesheet"
+      href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"
+    />
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <nav class="navbar">
+      <button class="btn btn-outline-primary float-left" id="highscore-button">
+        View Highscores
+      </button>
+      <div class="text-right">Time Left: <span id="timer"></span></div>
+    </nav>
+
+    <div class="container" id="home-page">
+      <h1>Javascript Code Quiz!</h1>
+      <p>
+        Prepare to put your Javascript skills to the test. Several questions will be posed against a clock in the upper right corner. Every question you answer incorrectly takes 15 seconds off the clock. The length of time you have remaining determines your final score. To begin, press the'start quiz' button. Best of luck!
+      </p>
+      <button class="btn btn-primary" id="start-button">Start Quiz</button>
     </div>
 
-<script src="script.js">
-</script>
-</body>
+    <div class="d-none" id="question-page">
+      <h2 id="question"></h2>
+      <div id="answers" class="btn-group-vertical"></div>
+      <h3 id="correctness"></h3>
+    </div>
+
+    <div class="d-none" id="score-page">
+      <h1>Your Score:</h1>
+      <h3 id="score"></h3>
+      <form class="container">
+        <ul class="list-inline">
+          <li class="list-inline-item">
+            <label class="font-weight-bold">Initials:</label>
+          </li>
+          <li class="list-inline-item">
+            <input
+              type="text"
+              class="form-control mb-2 mr-sm-2"
+              id="initials"
+              maxlength="3"
+            />
+          </li>
+          <li class="list-inline-item">
+            <button type="submit" class="btn btn-primary" id="submit-button">
+              Submit
+            </button>
+          </li>
+        </ul>
+      </form>
+    </div>
+
+    <div class="container d-none" id="highscore-page">
+      <h1>High Scores:</h1>
+      <ul class="list-group font-weight-bolder mb-2" id="highscores"></ul>
+      <button class="btn btn-primary" id="back-button">Go Back</button>
+      <button class="btn btn-primary" id="clear-button">
+        Clear Highscores
+      </button>
+    </div>
+
+    <script src="./script.js" async defer></script>
+  </body>
 </html>
