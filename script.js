@@ -23,9 +23,46 @@ var gameOver = false;
 var score;
 var highscoreArray = [];
 
-    countdownEl.innerHTML = `${minutes}: ${seconds}`;
-    time--;
-   
+// quiz questions and answers
+var question1 = {
+  question: "What does CSS stand for?",
+  answer1: "<Computer style sheets>",
+  answer2: "<Colourful style sheets>",
+  answer3: "<Cascading style sheets>",
+  rightAnswer: "<Cascading style sheets>"
+};
+var question2 = {
+  question: "What does HTML stand for?",
+  answer1: "Hyper text markup langauge",
+  answer2: "Hyperlinks and text markup language",
+  answer3: "Home tool markup",
+  rightAnswer: "Home tool markup"
+};
+var question3 = {
+  question: "Inside which HTML element do we put the Javascript code",
+  answer1: "Script",
+  answer2: "Javascript",
+  answer3: "JS",
+  rightAnswer: "Script"
+};
+var question4 = {
+  question: "What special character are javascript arrays contained in?",
+  answer1: "' '",
+  answer2: "( )",
+  answer3: "{ }",
+  rightAnswer: "[ ]"
+};
+var questionArray = [question1, question2, question3, question4];
+var questionIndex = 0;
+
+function init() {
+  if (localStorage.getItem("highscores") !== null) {
+    highscoreArray = JSON.parse(localStorage.getItem("highscores"));
+    console.log("block 1");
+  }else{
+    localStorage.setItem("highscores", JSON.stringify(highscoreArray));
+    console.log("block 2");
+  }
 }
 
 let quizData = [
