@@ -65,54 +65,72 @@ function init() {
   }
 }
 
-let quizData = [
-    {
-     question:"What does CSS stand for?",
-     multiplechoice: [
-         "Computer style sheets", 
-         "Colourful style sheets",
-         "Cascading style sheets"
-     ],
-     answer: "Cascading style sheets"
-    },
-    {
-        question:"What does HTML stand for?",
-        multiplechoice: [
-            "Hyper text markup langauge", 
-            "Hyperlinks and text markup language",
-            "Home tool markup"
-        ],
-        answer: "Home tool markup"
-       },
-    {
-        question:"Inside which HTML element do we put the Javascript code",
-        multiplechoice: [
-            "Script", 
-            "Javascript",
-            "JS"
-        ],
-        answer: "Script"
-       },
-       {
-        question:"Can you reassign a const variable",
-        multiplechoice: [
-            "Yes", 
-            "No",
-        ],
-        answer: "No"
-       }
-   
+//button functions
+function viewHighscores() {
+  gameOver = true;
+  homePage.classList.add("d-none");
+  questionPage.classList.add("d-none");
+  scorePage.classList.add("d-none");
+  highscorePage.classList.remove("d-none");
+  renderHighscores();
+}
 
-];
+function startQuiz() {
+  homePage.classList.add("d-none");
+  questionPage.classList.remove("d-none");
+  gameOver = false;
+  questionIndex = 0;
 
-let question = 0;
-let userAnswer;
-let currentQuestion = document.getElementById("question");
-let startButton = document.getElementById('start-button');
-let multiplechoice = document.getElementById("multipleChoices");
-let choice = document.getElementsByClassName("choice");
+  startClock();
+  renderQuestion();
+}
 
+function startClock() {
+  score = 75;
+  timerEL.textContent = score;
+  var timerInterval = setInterval(function() {
+    if (gameOver) {
+      clearInterval(timerInterval);
+    }else if(score <= 0){
+      gameOver = true;
+      clearInterval(timerInterval);
+      correctnessEl.textContent = "TIME UP!";
+      scoreEl.textContent = score;
+      setTimeout(function(){questionPage.classList.add("d-none");
+      scorePage.classList.remove("d-none");},1002)
+    } else {
+      score--;
+      timerEL.textContent = score;
+    }
+  }, 1000);
+}
 
+function renderQuestion() {
+  answersEl.innerHTML = "";
+  questionEl.textContent = questionArray[questionIndex].question;
+  var answerArray = genererateAnswerArray(questionArray[questionIndex]);
+  for (var i = 0; i < answerArray.length; i++) {
+    var answerButton = document.createElement("button");
+    answerButton.textContent = answerArray[i];
+    answerButton.classList.add("btn", "btn-primary");
+    answersEl.appendChild(answerButton);
+  }
+}
+
+function genererateAnswerArray(question) {
+  var answerArray = [];
+  answerArray.push(
+    question.answer1,
+    question.answer2,
+    question.answer3
+  );
+  shuffle(answerArray);
+  return answerArray;
+}
+//Sourced from https://javascript.info/task/shuffle
+function shuffle(array) {
+  array.sort(() => Math.random() - 0.5);
+}
 
 
 startButton.addEventListener('click' , () => { 
